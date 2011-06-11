@@ -1,0 +1,41 @@
+body {
+  font-family: "GillSans-Light";
+}
+
+pre {
+  line-height: 130%
+}
+
+h4 {
+  font-size: 35px;
+  text-align: center;
+  font-weight: normal;
+}
+
+h3 {
+  font-size: 55px;
+}
+
+h2 {
+  font-size: 70px;
+}
+
+h1 {
+  font-size: 90px;
+}
+
+li {
+  font-size: 55px;
+}
+
+a {
+  color: black;
+}
+
+.smallest {
+  font-size: 50%;
+}
+
+.smallish {
+  font-size: 60%;
+}
