@@ -1,7 +1,7 @@
 !SLIDE 
-# Centralized Logging #
+# [Centralized Logging](http://github.com/basho/riaktant) #
 
-## With Node.js and Riak Search ##
+## With Node.js and [Riak Search](http://wiki.basho.com) ##
 
 !SLIDE bullets incremental
 
@@ -195,6 +195,7 @@
 
 !SLIDE smaller
 
+    @@@ erlang
     -module(translate).
     -export([loop/0, translate/2]).
 
