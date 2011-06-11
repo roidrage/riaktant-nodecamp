@@ -42,14 +42,14 @@
     <65>1 2011-02-14T02:36:21.470+01:00 node5.riak.basho.com nginx 22467 - Client disconnected
     <180>1 2011-02-14T03:00:21.409+01:00 web2.basho.com sshd 30201 - Client disconnected
 
-!SLIDE
+!SLIDE small
 
 # Parse with Glossy #
 
     syslogParser = require('glossy').Parse
     parsedMessage = syslogParser.parse message
 
-!SLIDE smaller
+!SLIDE smallest
 
 # Parsed Message #
 
@@ -84,24 +84,25 @@
 
 ![Riak-js.org](riakjs.org.png)
 
-<http://riakjs.org>
+## <http://riakjs.org> ##
 
-!SLIDE smaller
+!SLIDE smallest
 
 # Saving #
 
     riak = require("riak-js").getClient()
-    riak.save "syslog", "ffb0731003eb63a744c1", {originalMessage: "..."}, (error, data) ->
+    message = {originalMessage: ""}
+    riak.save "syslog", "ffb0731003eb63a744c1", message, (error, data) ->
       ...
 
-!SLIDE smaller
+!SLIDE smallest
 
 # Fetching #
 
     riak.get "syslog", "ffb0731003eb63a744c1", (error, data, meta) ->
       console.log(data)
 
-!SLIDE smaller
+!SLIDE smallest
 
 # Searching #
 
@@ -138,7 +139,7 @@
             result[host] = values[value][host]
       [result]
 
-!SLIDE smaller
+!SLIDE smallest
 
 # MapReduce #
 ## Fire!! ##
@@ -159,6 +160,13 @@
 
 !SLIDE bullets incremental
 
+## Cue Demo Music ##
+
+* Or go [here](http://basho.no.de) for live demo.
+* User riak, Password awesomesauce
+
+!SLIDE bullets incremental
+
 # Warning #
 
 * Syslog is UDP
@@ -173,10 +181,35 @@
 * Defer storing into Riak
 * Drain queue regularly
 
-!SLIDE
+!SLIDE bullets incremental
 
 # The Future #
 
 * Internal Pub/Sub
 * Distribute Notification via Faye
 * Pretty, Pretty Graphs
+
+!SLIDE
+
+# One more thing... #
+
+!SLIDE smaller
+
+    -module(translate).
+    -export([loop/0, translate/2]).
+
+    loop() ->
+      receive
+        "casa" ->
+          Pid ! "house",
+          loop();
+        _ ->
+          Pid ! "What?",
+          loop()
+    end.
+
+    translate(To, Word) ->
+      To ! {self(), Word},
+      receive
+        Translation -> Translation
+    end.
