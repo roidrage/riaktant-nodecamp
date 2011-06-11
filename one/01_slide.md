@@ -3,6 +3,8 @@
 
 ## With Node.js and [Riak Search](http://wiki.basho.com) ##
 
+### [Mathias Meyer](http://paperplanes.de), [@roidrage](http://twitter.com/roidrage)
+
 !SLIDE bullets incremental
 
 # The Problem #
@@ -26,13 +28,13 @@
 * UDP
 * There is no step 2
 
-!SLIDE
+!SLIDE smaller
 
     server = dgram.createSocket('udp4')
     server.on "message", (rawMessage) ->
       ...
 
-!SLIDE smallest
+!SLIDE tiny
 
 # Syslog #
 
@@ -41,6 +43,16 @@
     <25>1 2011-02-14T01:16:21.364+01:00 node5.riak.basho.com nginx 18418 - Client process died before closing connection, cleaning up
     <65>1 2011-02-14T02:36:21.470+01:00 node5.riak.basho.com nginx 22467 - Client disconnected
     <180>1 2011-02-14T03:00:21.409+01:00 web2.basho.com sshd 30201 - Client disconnected
+    <47>1 2011-02-14T09:01:21.404+01:00 node5.riak.basho.com sshd 62119 - Client process died before closing connection, cleaning up
+    <100>1 2011-02-14T10:24:21.430+01:00 node5.riak.basho.com sshd 31970 - Client disconnected
+    <50>1 2011-02-14T11:58:21.512+01:00 web2.basho.com ftpd 17240 - Client process died before closing connection, cleaning up
+    <119>1 2011-02-14T13:07:52.00+01:00 lb.basho.com ftpd 54971 - Client process died before closing connection, cleaning up
+    <132>1 2011-02-14T13:07:52.00+01:00 app1.basho.com nginx 14822 - Client process died before closing connection, cleaning up
+    <158>1 2011-02-14T13:07:52.00+01:00 node5.riak.basho.com sendmail 31056 - Client disconnected
+    <82>1 2011-02-14T13:07:52.00+01:00 lb.basho.com sshd 25697 - Client process died before closing connection, cleaning up
+    <20>1 2011-02-14T13:07:52.00+01:00 node5.riak.basho.com ftpd 25101 - Client disconnected
+    <9>1 2011-02-14T13:07:52.00+01:00 app1.basho.com ftpd 10870 - Client disconnected
+
 
 !SLIDE small
 
@@ -54,7 +66,7 @@
 # Parsed Message #
 
     { 
-      originalMessage: '<180>1 2011-02-14T03:00:21.409+01:00 web2.basho.com sshd 30201 - Client disconnected',
+      originalMessage: '<180>1 2011-02-14T03:00:21.409+01:00...',
       prival: 180,
       version: 1,
       facilityID: 22,
@@ -75,6 +87,7 @@
 * Replicated
 * Scales out linearly
 * Flexible data model
+* Full Text Search
 
 !SLIDE
 
@@ -214,3 +227,10 @@
       receive
         Translation -> Translation
     end.
+
+!SLIDE smaller
+
+    @@@ erlang
+    Pid = spawn(fun translate:loop/0).
+    Pid ! "casa"
+    %% => "house"
