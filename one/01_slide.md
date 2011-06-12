@@ -80,7 +80,7 @@
 
 !SLIDE bullets incremental
 
-# Riak #
+## Riak ##
 
 * Distributed
 * Fault-Tolerant
@@ -145,11 +145,11 @@
     reduce = (values) ->
       result = {}
       for value in values
-        for host in values[value]
-          if host in result
-            result[host] += values[value][host]
+        for host, count of value
+          if result[host]
+            result[host] += result
           else
-            result[host] = values[value][host]
+            result[host] = result
       [result]
 
 !SLIDE smallest
@@ -190,7 +190,6 @@
 
 # Solution #
 
-* Don't block the event loop!
 * Defer storing into Riak
 * Drain queue regularly
 
@@ -214,10 +213,10 @@
 
     loop() ->
       receive
-        "casa" ->
+        {Pid, "casa"} ->
           Pid ! "house",
           loop();
-        _ ->
+        {Pid, _} ->
           Pid ! "What?",
           loop()
     end.
